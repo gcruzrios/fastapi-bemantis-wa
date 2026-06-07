@@ -52,7 +52,7 @@ def create_lead(
     _: Usuario = Depends(get_current_user),
 ):
     """Crea un nuevo lead. Usado por el formulario frontend y por el flujo n8n."""
-    lead = Lead(**payload.model_dump())
+    lead = Lead(**payload.model_dump(exclude_none=True))
     db.add(lead)
     db.commit()
     db.refresh(lead)
@@ -71,6 +71,8 @@ def update_lead(
     if not lead:
         raise HTTPException(status_code=404, detail=f"Lead {lead_id} no encontrado")
     for field, value in payload.model_dump(exclude_unset=True).items():
+        if field in {"nombre", "estado"} and value is None:
+            continue
         setattr(lead, field, value)
     db.commit()
     db.refresh(lead)
@@ -89,4 +91,3 @@ def delete_lead(
         raise HTTPException(status_code=404, detail=f"Lead {lead_id} no encontrado")
     db.delete(lead)
     db.commit()
-
