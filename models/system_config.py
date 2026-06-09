@@ -16,6 +16,7 @@ class SystemConfig(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     quote_prefix = Column(String, nullable=False, default="CD")
+    invoice_prefix = Column(String, nullable=False, default="FAC")
     tax_rate = Column(Float, nullable=False, default=13.0)
     currency = Column(Enum(CurrencyEnum), nullable=False, default=CurrencyEnum.USD)
     exchange_rate = Column(Float, nullable=False, default=450.0)

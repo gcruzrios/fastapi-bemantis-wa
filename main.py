@@ -4,8 +4,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from database import Base, engine
-from models import contact, interaccion, lead, quote, service, system_config, usuario  # noqa: F401
-from routers import auth, config, contacts, interacciones, leads, quotes, services
+from models import contact, interaccion, invoice, lead, quote, service, system_config, usuario  # noqa: F401
+from routers import auth, config, contacts, interacciones, invoices, leads, quotes, services
 
 Base.metadata.create_all(bind=engine)
 
@@ -40,6 +40,7 @@ app.include_router(config.router, prefix="/config", tags=["Configuracion"])
 app.include_router(services.router, prefix="/services", tags=["Servicios"])
 app.include_router(contacts.router, prefix="/contacts", tags=["Contactos"])
 app.include_router(quotes.router, prefix="/quotes", tags=["Cotizaciones"])
+app.include_router(invoices.router, prefix="/invoices", tags=["Facturas"])
 
 
 @app.get("/")

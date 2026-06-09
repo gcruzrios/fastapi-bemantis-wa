@@ -32,3 +32,4 @@ class Contact(Base):
     lead = relationship("Lead", backref="contact")
     created_by_user = relationship("Usuario", foreign_keys=[created_by])
     quotes = relationship("Quote", back_populates="contact")
+    invoices = relationship("Invoice", back_populates="contact")
